@@ -72,10 +72,10 @@ $ pip install -r requirements.txt
 
 Summary of one-time project setup:
 
-- [ ] `cd` into your `projects` folder
-- [ ] Clone the project onto your machine
-- [ ] `cd` into the `viewing-party` folder
-- [ ] Create the virtual environment `venv`
+- [x] `cd` into your `projects` folder
+- [x] Clone the project onto your machine
+- [x] `cd` into the `viewing-party` folder
+- [x] Create the virtual environment `venv`
 - [ ] Activate the virtual environment `venv`
 - [ ] Install the dependencies with `pip`
 
