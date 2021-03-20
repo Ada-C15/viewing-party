@@ -1,3 +1,5 @@
+from collections import Counter
+
 
 def create_movie(movie_title, genre, rating):
     """ 
@@ -82,7 +84,7 @@ def get_most_watched_genre(user_data):
     if not user_data["watched"]:
         return None
     genres = [movie["genre"] for movie in user_data["watched"]]
-    return max(set(genres), key=genres.count)
+    return Counter(genres).most_common(1)[0][0]
 
 
 def get_unique_watched(user_data):
@@ -107,22 +109,20 @@ def get_friends_unique_watched(user_data):
         INPUT: user_data dictionary
         OUTPUT: list of movie dictionaries
     """
-    friends_watched_movies = [
-        movie for friend in user_data["friends"] for movie in friend["watched"]]
+    friends_watched_movies = (
+        movie for friend in user_data["friends"] for movie in friend["watched"])
 
-    user_watched_titles = [movie["title"] for movie in user_data["watched"]]
+    friends_watched_movies_dict = {
+        movie["title"]: movie for movie in friends_watched_movies}
 
-    friends_unique_watched_titles = []
-    friends_unique_watched = []
+    user_watched_titles = set([movie["title"]
+                               for movie in user_data["watched"]])
 
-    for movie in friends_watched_movies:
-        if movie["title"] not in friends_unique_watched_titles and \
-                movie["title"] not in user_watched_titles:
+    friends_unique_watched_movies = [
+        movie for title, movie in friends_watched_movies_dict.items()
+        if title not in user_watched_titles]
 
-            friends_unique_watched_titles.append(movie["title"])
-            friends_unique_watched.append(movie)
-
-    return friends_unique_watched
+    return friends_unique_watched_movies
 
 
 def get_available_recs(user_data):
@@ -148,8 +148,7 @@ def get_new_rec_by_genre(user_data):
     """
     if not user_data["watched"]:
         return []
-    user_genres = [movie["genre"] for movie in user_data["watched"]]
-    preferred_genre = max(set(user_genres), key=user_genres.count)
+    preferred_genre = get_most_watched_genre(user_data)
     possible_recs = get_friends_unique_watched(user_data)
     return [movie for movie in possible_recs
             if movie["genre"] == preferred_genre]
