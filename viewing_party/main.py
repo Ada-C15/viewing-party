@@ -66,17 +66,33 @@ def get_most_watched_genre(user_data):
 
     watched_list = user_data["watched"]
 
+    if(len(watched_list) == 0):
+        return None
+
     # Create dict genre_counts with key as genre name and value as frequency of that genre
+    genre_count = {}
 
     # Iterate over the watched movie list and populate the genre_counts dict
-
+    for movie in watched_list:
+        genre = movie["genre"]
+        # if the genre does not exist in the genre_counts dict, initialize it to 0
+        if (genre not in genre_count.keys()):
+            genre_count[genre] = 0
+        
+        # Add one to increment the frequency count for that genre
+        genre_count[genre] += 1
+        
     # find the nax value of the genre_counts.values() ==> max frequency
+    maximum_genre_counts = max(genre_count.values())
 
     # Find the genre name that corresponds to the max frequency count
-
+    for genre in genre_count:
+        if genre_count[genre] == maximum_genre_counts:
+                 
     # return genre_name
-            
+            return genre       
 
+    return None
 
 
 # test program starts here
