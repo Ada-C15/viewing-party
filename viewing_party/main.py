@@ -1,5 +1,6 @@
 from statistics import mean # new requirement 
 from collections import Counter # built in to python
+import random 
 
 def create_movie(movie_title, genre, rating):
     if movie_title and genre and rating:
@@ -44,16 +45,20 @@ def get_most_watched_genre(user_data):
         #  built in Counter from collections module
         return genre_count[0][0]
 
-def get_unique_watched(user_data):
-    # gets movies that user has watched that user's friends haven't
-    user_watched = [x for x in user_data['watched']]
-    unique_watched = []
+def get_friend_watched(user_data):
+    # gets list of movies friends have watched
     friend_watched = []
     for friend_data in user_data["friends"]:
         for movies in friend_data.values():
             for movie in movies:
                 friend_watched.append(movie)
-                
+    return friend_watched
+
+def get_unique_watched(user_data):
+    # gets movies that user has watched that user's friends haven't
+    user_watched = [x for x in user_data['watched']]
+    unique_watched = []
+    friend_watched = get_friend_watched(user_data)      
     for movie in user_watched:
         if movie not in friend_watched and movie not in unique_watched:
             unique_watched.append(movie)
@@ -63,11 +68,7 @@ def get_friends_unique_watched(user_data):
     # gets movies that friends have watched but user hasn't
     user_watched = [x for x in user_data['watched']]
     unique_watched = []
-    friend_watched = []
-    for friend_data in user_data["friends"]:
-        for movies in friend_data.values():
-            for movie in movies:
-                friend_watched.append(movie)
+    friend_watched = get_friend_watched(user_data) 
 
     for movie in friend_watched:
         if movie not in user_watched and movie not in unique_watched:
@@ -84,3 +85,21 @@ def get_available_recs(user_data):
                     recommendations.append(movie)
     
     return recommendations
+
+def get_new_rec_by_genre(user_data):
+    most_watched = get_most_watched_genre(user_data)
+    possible_recs = get_friends_unique_watched(user_data)
+    recs = []
+    for movie in possible_recs:
+        if most_watched in movie.values():
+            recs.append(movie)
+    return recs
+
+def get_rec_from_favorites(user_data):
+    possible_rec = user_data['favorites']
+    friend_watched = get_friend_watched(user_data)
+    recs = []
+    for item in possible_rec:
+        if item not in friend_watched:
+            recs.append(item)
+    return recs
