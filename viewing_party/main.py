@@ -50,9 +50,10 @@ def get_unique_watched(user_data):
     unique_watched = []
     friend_watched = []
     for friend_data in user_data["friends"]:
-        for watched_key, movies in friend_data.items():
+        for movies in friend_data.values():
             for movie in movies:
                 friend_watched.append(movie)
+                
     for movie in user_watched:
         if movie not in friend_watched and movie not in unique_watched:
             unique_watched.append(movie)
@@ -64,10 +65,22 @@ def get_friends_unique_watched(user_data):
     unique_watched = []
     friend_watched = []
     for friend_data in user_data["friends"]:
-        for watched_key, movies in friend_data.items():
+        for movies in friend_data.values():
             for movie in movies:
                 friend_watched.append(movie)
+
     for movie in friend_watched:
         if movie not in user_watched and movie not in unique_watched:
             unique_watched.append(movie)
     return unique_watched
+
+def get_available_recs(user_data):
+    recommendations = []
+    services = user_data['subscriptions']
+    for friend_data in user_data["friends"]:
+        for movies in friend_data.values():
+            for movie in movies:
+                if movie['host'] in services and movie not in recommendations:
+                    recommendations.append(movie)
+    
+    return recommendations
