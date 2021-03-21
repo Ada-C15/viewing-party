@@ -91,7 +91,7 @@ def test_get_unique_watched_returns_empty_list_when_amandas_movies_are_all_in_he
 
     # Act
     amandas_unique_movies = get_unique_watched(amandas_data)
-
+    
     # Arrange
     assert len(amandas_unique_movies) is 0
 
