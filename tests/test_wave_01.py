@@ -143,7 +143,7 @@ def test_watch_movie_moves_movie_from_watchlist_to_watched():
                 "genre": "Intrigue",
                 "rating": 3.9
             }
-        ]
+        ],
     }
 
     # Act
