@@ -148,7 +148,7 @@ def remove_movie_from_list(movie_title, movie_list):
 
 
 
-def get_unique_watched_sne(user_data):
+def get_unique_watched_alternate_solution(user_data):
     #creat an empty dict to store the new movie list 
     unique_user_watch_list = []
 
@@ -177,7 +177,7 @@ def get_unique_watched_sne(user_data):
 
     return unique_user_watch_list
 
-def get_friends_unique_watched_sne(user_data):
+def get_friends_unique_watched_alternate_solution(user_data):
 
     unique_friend_watch_list = []
 
@@ -198,7 +198,7 @@ def get_friends_unique_watched_sne(user_data):
 
 
 
-
+#WAVE 4
 
 
 
