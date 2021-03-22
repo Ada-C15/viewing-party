@@ -148,7 +148,7 @@ def remove_movie_from_list(movie_title, movie_list):
 
 
 
-def get_unique_watched_alternate_solution(user_data):
+""" def get_unique_watched_alternate_solution(user_data):
     #creat an empty dict to store the new movie list 
     unique_user_watch_list = []
 
@@ -177,30 +177,25 @@ def get_unique_watched_alternate_solution(user_data):
 
     return unique_user_watch_list
 
-def get_friends_unique_watched_alternate_solution(user_data):
 
-    unique_friend_watch_list = []
-
-    user_watched_movie_list = user_data["watched"]
-    friends_watched_movie_list = user_data["friends"]
-
-    
-    for friends_movies_dict in friends_watched_movie_list:
-        for movies_dict in user_watched_movie_list:
-            for user_watched_movies in movies_dict["watched"]:
-        
-                if friends_movies_dict["title"] != user_watched_movies["title"]:
-                    unique_friend_watch_list.append(friends_movies_dict)
-        
-    return unique_friend_watch_list
-    
-    return len(unique_friend_watch_list)
-
+ """
 
 
 #WAVE 4
 
 
+def get_available_recs(user_data):
+   recommended_movies = []
+
+#call the function that determines the movie the users friends have watched but the user hasn't
+    get_friends_unique_watched(user_data)
+    
+#determine if the friends movie susbscription is in the users subscription
+#create a helper function to find the movie with host subscription
+def find_host_subscription(get_friends_unique_watched, user_data):
+    
+    
+#return the list of recommended movies
 
 
 # test program starts here
