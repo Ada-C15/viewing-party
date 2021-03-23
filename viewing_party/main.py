@@ -57,7 +57,6 @@ def get_most_watched_genre(user_data):
 
 def get_unique_watched(user_data):
     """Determines movies the user has watched, but their friends haven't"""
-    # TODO: learn list comprehension and end this nonsense
     user_movies = set()
     for movie in user_data["watched"]:
         user_movies.add(movie["title"])
@@ -70,22 +69,6 @@ def get_unique_watched(user_data):
     for movie in result: 
         unique_movies.append({"title": movie})
     return unique_movies
-
-    # First approach:
-    # user_watched = user_data["watched"]
-    # friends_watched = []
-    # for friend in user_data["friends"]:
-    #     for movie in friend["watched"]:
-    #         friends_watched.append(movie)
-    # result = []
-    # for user_movie in user_watched:
-    #     unique_movie = True
-    #     for friend_movie in friends_watched:
-    #         if friend_movie["title"] == user_movie["title"]:
-    #             unique_movie = False
-    #     if unique_movie:
-    #         result.append(user_movie)
-    # return result
 
 def get_friends_unique_watched(user_data):
     """Determines movies user's friends have watched, but the user has not"""
@@ -112,7 +95,7 @@ def get_available_recs(user_data):
             if (movie["title"] in rec_titles) and (movie["host"] in user_data["subscriptions"]):
                 rec_movies.append({"title": movie["title"], "host": movie["host"]})
 
-    return [dict(t) for t in {tuple(d.items()) for d in rec_movies}]
+    return [dict(tupled_movie) for tupled_movie in {tuple(movie.items()) for movie in rec_movies}]
 
 def get_new_rec_by_genre(user_data):
     """
@@ -132,7 +115,7 @@ def get_new_rec_by_genre(user_data):
             if (movie["title"] in rec_titles) and (movie["genre"] == genre):
                 rec_movies.append({"title": movie["title"], "genre": movie["genre"]})
 
-    return [dict(t) for t in {tuple(d.items()) for d in rec_movies}]
+    return [dict(tupled_movie) for tupled_movie in {tuple(movie.items()) for movie in rec_movies}]
 
 def get_rec_from_favorites(user_data):
     """Gets the user's favorite movies, their friends haven't seen"""
