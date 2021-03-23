@@ -147,45 +147,49 @@ def remove_movie_from_list(movie_title, movie_list):
             return
 
 #WAVE 4 
-        
 def get_available_recs(user_data):
     
+    #2 criterias:
     # At least one friend has watched the movie
-    # The movie's host == user's subscription
+    # The friends movie's host == user's subscription
+	#initialize a new list variable
     users_recommended_movie_list = []
     
     users_watched_movies = user_data["watched"]
-    
+
+    #iterate over all the movies in each friends watched list
+		
+	#iterates over each friend
     for friend_dict in user_data["friends"]:
         
         friend_movies_list = friend_dict["watched"]
         
+		#iterates over a friend's movie list
         for friend_movie in friend_movies_list:
             
             if (not(does_movie_exist_in_list(friend_movie["title"], users_watched_movies)) and
                     is_movie_host_in_subscription_list(friend_movie["host"], user_data["subscriptions"])):
-                
+
+                #call the function with the friend_movie dict and the output list of recommended movies
                 add_movie_to_list(friend_movie, users_recommended_movie_list)
     
-    return users_recommended_movie_list
-    
+    return users_recommended_movie_list     
 
+
+#this function takes a movie host and subscription list and checks if the movie host exists in the subscription list (reusable for any other function)
 def is_movie_host_in_subscription_list(movie_host, subscription_list):
-
+    
+    #subscription_list is just a list of string, where each element is a subscription
     for sub in subscription_list:
-        if (sub == movie_host):
+        if (sub == movie_host): 
             return True
     
     return False
 
+
+#WAVE 5    
     
-    
-#determine if the friends movie susbscription is in the users subscription
-#create a helper function to find the movie with host subscription
-      
-    
-    
-#return the list of recommended movies
+
 
 
 # test program starts here
