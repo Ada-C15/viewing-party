@@ -127,7 +127,7 @@ def get_friends_unique_watched(user_data):
             if (not does_movie_exist_in_list(friend_movie["title"], users_watched_movies)):
                 add_movie_to_list(friend_movie, friends_unique_watched)
     
-    return friends_unique_watched         
+    return friends_unique_watched        
 
 def does_movie_exist_in_list(movie_title, movie_list):
     for mov in movie_list:
@@ -146,53 +146,43 @@ def remove_movie_from_list(movie_title, movie_list):
             del movie_list[i] 
             return
 
+#WAVE 4 
+        
+def get_available_recs(user_data):
+    
+    # At least one friend has watched the movie
+    # The movie's host == user's subscription
+    users_recommended_movie_list = []
+    
+    users_watched_movies = user_data["watched"]
+    
+    for friend_dict in user_data["friends"]:
+        
+        friend_movies_list = friend_dict["watched"]
+        
+        for friend_movie in friend_movies_list:
+            
+            if (not(does_movie_exist_in_list(friend_movie["title"], users_watched_movies)) and
+                    is_movie_host_in_subscription_list(friend_movie["host"], user_data["subscriptions"])):
+                
+                add_movie_to_list(friend_movie, users_recommended_movie_list)
+    
+    return users_recommended_movie_list
+    
 
+def is_movie_host_in_subscription_list(movie_host, subscription_list):
 
-""" def get_unique_watched_alternate_solution(user_data):
-    #creat an empty dict to store the new movie list 
-    unique_user_watch_list = []
+    for sub in subscription_list:
+        if (sub == movie_host):
+            return True
+    
+    return False
 
     
-    #create variables that store the list of movies
-    user_watched_movie_list = user_data["watched"]
-    friends_watched_movie_list = user_data["friends"]
-
-    number_of_friends = len(friends_watched_movie_list)
-
-    #iterate over the user watched movie list and compare with friends movies
-    for movies_dict in user_watched_movie_list:
-        
-        count_of_friends_seen_movie = 0
-        
-        for friends_movies_dict in friends_watched_movie_list:
-            for friend_watched_movies in friends_movies_dict["watched"]:
-                # a friend has seen this movie 
-                if movies_dict["title"] == friend_watched_movies["title"]:
-                    count_of_friends_seen_movie += 1
-                    break # go to the next friend 
-                           
-        # at this point, none of the friends has seen this movie
-        if (count_of_friends_seen_movie == 0):
-            add_movie_to_list(movies_dict, unique_user_watch_list)
-
-    return unique_user_watch_list
-
-
- """
-
-
-#WAVE 4
-
-
-def get_available_recs(user_data):
-   recommended_movies = []
-
-#call the function that determines the movie the users friends have watched but the user hasn't
-    get_friends_unique_watched(user_data)
     
 #determine if the friends movie susbscription is in the users subscription
 #create a helper function to find the movie with host subscription
-def find_host_subscription(get_friends_unique_watched, user_data):
+      
     
     
 #return the list of recommended movies
