@@ -49,7 +49,7 @@ def get_most_watched_genre(user_data):
       for genre in movie["genre"]:
         genres.append(movie["genre"])
         
-    return max(set(genres))
+    return max(set(genres), key=genres.count)
 
 def get_friends_movies(user_data):
 
