@@ -50,7 +50,7 @@ def watch_movie(user_data, movie):
             user_data["watchlist"].append(item)
     return user_data
 
-#Test_wave_1 
+#Test_wave_2
 def get_watched_avg_rating(user_data):
     """
     Getting an average of watched movie rating
