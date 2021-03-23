@@ -43,11 +43,11 @@ def watch_movie(user_data, movie):
     input: two paramemters(user_data, movie)
     output: returns updated data  
     """
-    for item in user_data["watchlist"]:
+    for item in list(user_data["watchlist"]):
         if movie == item["title"]:
-
+        
             user_data["watched"].append(item)
-            user_data["watchlist"].append(item)
+            user_data["watchlist"].pop(item)
     return user_data
 
 #Test_wave_2
