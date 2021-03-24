@@ -25,21 +25,24 @@ def add_to_watchlist(user_data, movie):
 
 def watch_movie(user_data, title):
 
-    for k,v in user_data.items():
+    user_data_copy = user_data
+
+    for k,v in user_data_copy.items():
         # k: watchlist, v: [...] (2)
         # k: watched, v: [...] (1)
         if k == "watchlist":
             for movie in v: # initial length: 2
                 if movie["title"] == title:
-                    user_data["watchlist"].remove(movie)
-                    user_data["watched"].append(movie)
-                    return user_data
+                    user_data_copy["watchlist"].remove(movie)
+                    user_data_copy["watched"].append(movie)
+                    return user_data_copy
                 # else:
                 #     return user_data
             # return use_data
         # return use_data
-    return user_data
+    return user_data_copy
 
+# Wave 2
 def get_watched_avg_rating(user_data):
     total_rating = 0
     for v in user_data.values():
@@ -61,6 +64,7 @@ def get_most_watched_genre(user_data):
             else:
                 genre_map[x] += 1
     
+    # return (max(genre_map,key=genre_map.get))
     current_max = 0
     for k, v in genre_map.items():
         if v > current_max:
@@ -70,6 +74,7 @@ def get_most_watched_genre(user_data):
         if v == current_max:
             return k
 
+# Wave 3
 def get_unique_watched(user_data):
 
     mine_watched = {}
@@ -129,6 +134,7 @@ def get_friends_unique_watched(user_data):
             diff.append({"title": title})
     return (diff)     
 
+# Wave 4
 def get_available_recs(user_data):
 
     friends_watched = []
@@ -144,7 +150,48 @@ def get_available_recs(user_data):
     rec_list = [i for n, i in enumerate(result) if i not in result[n + 1:]]
     return rec_list
 
+# Wave 5
+def get_new_rec_by_genre(user_data):
 
+    # No recommendation if user watched list is empty
+    if user_data["watched"] == []:
+        return []
+
+    # Get user's most frequently watched genre
+    user_genre = []
+    for movie in user_data["watched"]:
+        user_genre.append(movie["genre"])
+    most_watched_genre = (max(set(user_genre), key = user_genre.count))
+
+    # Get movies that user hasn't watched but one of the user's friends has watched
+    rec_movie = get_friends_unique_watched(user_data)
+    # [{'title': 'Title D'}, {'title': 'Title E'}]
+
+    # Find list of recommended movies
+    result= []
+
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            if {"title": movie["title"]} in rec_movie and movie["genre"] == most_watched_genre:
+                result.append(movie)
+    return result
+
+def get_rec_from_favorites(user_data):
+
+    mine_watched = {}
+    for movie in user_data["favorites"]:
+        mine_watched[movie["title"]] = True
+    
+    friends_watched = {}
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            friends_watched[movie["title"]] = True
+
+    result = []
+    for title in mine_watched.keys():
+        if title not in friends_watched:
+            result.append({"title": title})
+    return (result)   
 
 
 
