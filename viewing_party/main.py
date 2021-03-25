@@ -1,4 +1,3 @@
-from collections import Counter
 
 
 def create_movie(movie_title, genre, rating):
@@ -84,7 +83,7 @@ def get_most_watched_genre(user_data):
     if not user_data["watched"]:
         return None
     genres = [movie["genre"] for movie in user_data["watched"]]
-    return Counter(genres).most_common(1)[0][0]
+    return get_most_frequent(genres)
 
 
 def get_unique_watched(user_data):
@@ -166,3 +165,16 @@ def get_rec_from_favorites(user_data):
 
     return [movie for movie in user_data["favorites"]
             if movie["title"] in possible_rec_titles]
+
+
+def get_most_frequent(genres):
+    """
+        Returns the most frequent element of a list 
+        or one of the most frequent in case of a tie
+        INPUT: list
+        OUTPUT: most frequent element of the list
+    """
+    count = {}
+    for genre in genres:
+        count[genre] = count.get(genre, 0) + 1
+    return max(count, key=lambda x: count[x])
