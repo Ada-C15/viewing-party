@@ -51,7 +51,13 @@ def get_most_watched_genre(user_data):
                 else:
                     genres[v] = 1 
 
+    count = 0
+    most_watched = ""
 
-    most_watched = max(genres)
-    return most_watched
+    for k, v in genres.items():
+        if v > count:
+            count = v
+            most_watched = k 
 
+    return most_watched 
+        
