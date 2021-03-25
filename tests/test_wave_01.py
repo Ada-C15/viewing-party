@@ -1,5 +1,7 @@
 import pytest
-# NOTE: In production code, we developers should change import * to something more specific. Due to some constraints of this project, we will import * in our test files.
+# NOTE: In production code, we developers should change import * to
+# something more specific. Due to some constraints of this project, we
+# will import * in our test files.
 from viewing_party.main import *
 
 
