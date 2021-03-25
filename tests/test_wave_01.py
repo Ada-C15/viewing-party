@@ -44,6 +44,8 @@ def test_create_movie_no_genre_returns_none():
     assert new_movie is None
 
 
+
+
 def test_create_movie_no_rating_returns_none():
     # Arrange
     movie_title = "Title A"
