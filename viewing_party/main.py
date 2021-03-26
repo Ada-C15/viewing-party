@@ -155,7 +155,7 @@ def get_friends_unique_watched(user_data):
     for title in friends_watched.keys():
         if title not in mine_watched:
             diff.append({"title": title})
-    return (diff)     
+    return diff  
 
 # Wave 4
 '''
@@ -233,7 +233,7 @@ def get_rec_from_favorites(user_data):
     for title in mine_watched.keys():
         if title not in friends_watched:
             result.append({"title": title})
-    return (result)   
+    return result
 
 
 
