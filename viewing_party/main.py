@@ -1,5 +1,7 @@
+# Wave 1
 def create_movie(title, genre, rating):
-    if bool(title) == True and bool(genre) == True and bool(rating) == True:
+    # if bool(title) == True and bool(genre) == True and bool(rating) == True:
+    if title and genre and rating:
         movie_dict = {
             "title": title,
             "genre": genre,
@@ -23,58 +25,75 @@ def add_to_watchlist(user_data, movie):
     user_data["watchlist"].append(movie)
     return user_data
 
+'''
+If title is in a movie in the user's watchlist, remove that movie
+from watchlist and add that to watched.
+'''
 def watch_movie(user_data, title):
 
-    user_data_copy = user_data
+    user_data_copy = user_data.copy()
 
-    for k,v in user_data_copy.items():
-        # k: watchlist, v: [...] (2)
-        # k: watched, v: [...] (1)
-        if k == "watchlist":
-            for movie in v: # initial length: 2
-                if movie["title"] == title:
-                    user_data_copy["watchlist"].remove(movie)
-                    user_data_copy["watched"].append(movie)
-                    return user_data_copy
+    for movie in user_data_copy["watchlist"]: # initial length: 2
+        if movie["title"] == title:
+            user_data["watchlist"].remove(movie)
+            user_data["watched"].append(movie)
+            return user_data
+            # break #Do I always need a break in a for-else loop? Or return will stop?
                 # else:
                 #     return user_data
             # return use_data
         # return use_data
-    return user_data_copy
+    else:
+        return user_data
 
 # Wave 2
 def get_watched_avg_rating(user_data):
+
+    # for v in user_data.values():
+    #     if v == []:
+    #         return 0.0
+    #     else:
+    #         for movie in v:
+    #             total_rating += movie["rating"]
+    #         avg = total_rating / len(v)
+    #         return avg
+
+    if user_data["watched"] == []:
+        return 0.0
+
     total_rating = 0
-    for v in user_data.values():
-        if v == []:
-            return 0.0
-        else:
-            for movie in v:
-                total_rating += movie["rating"]
-            avg = total_rating / len(v)
-            return avg
+    for movie in user_data["watched"]:
+            total_rating += movie["rating"]
+            avg = total_rating / len(user_data["watched"])
+    return avg
 
 def get_most_watched_genre(user_data):
     genre_map = {}
-    for v in user_data.values():
-        for movie in v:
-            x = movie["genre"]
-            if x not in genre_map:
-                genre_map[x] = 1
-            else:
-                genre_map[x] += 1
+    for movie in user_data["watched"]:
+        x = movie["genre"]
+        if x not in genre_map:
+            genre_map[x] = 1
+        else:
+            genre_map[x] += 1
     
-    # return (max(genre_map,key=genre_map.get))
-    current_max = 0
-    for k, v in genre_map.items():
-        if v > current_max:
-            current_max = v
+    most_watched_genre = (max(genre_map, key=genre_map.get)) if genre_map else None
+
+    return most_watched_genre 
+
+    # current_max = 0
+    # for k, v in genre_map.items():
+    #     if v > current_max:
+    #         current_max = v
     
-    for k, v in genre_map.items():
-        if v == current_max:
-            return k
+    # for k, v in genre_map.items():
+    #     if v == current_max:
+    #         return k
 
 # Wave 3
+'''
+Determine which movies the user has watched, 
+but none of their friends have watched.
+'''
 def get_unique_watched(user_data):
 
     mine_watched = {}
@@ -90,7 +109,7 @@ def get_unique_watched(user_data):
     for title in mine_watched.keys():
         if title not in friends_watched:
             diff.append({"title": title})
-    return (diff)
+    return diff
 
     # movie_map = {}
     # for k,v in user_data.items():
@@ -117,6 +136,10 @@ def get_unique_watched(user_data):
 
     # return result
 
+'''
+Determine which movies at least one of the user's friends have watched, 
+but the user has not watched.
+'''
 def get_friends_unique_watched(user_data):
 
     mine_watched = {}
@@ -135,6 +158,12 @@ def get_friends_unique_watched(user_data):
     return (diff)     
 
 # Wave 4
+'''
+Determine a list of recommended movies. Add to list if:
+The user has not watched it
+At least one of the user's friends has watched
+The "host" of the movie is a service that is in the user's "subscriptions"
+'''
 def get_available_recs(user_data):
 
     friends_watched = []
@@ -147,10 +176,18 @@ def get_available_recs(user_data):
         if movie["host"] in user_data["subscriptions"]:
             result.append(movie)
     # [{'title': 'Title A', 'host': 'Service A'}, {'title': 'Title A', 'host': 'Service A'}, {'title': 'Title B', 'host': 'Service B'}]
+    
+    # Remove duplicates in rec_list
     rec_list = [i for n, i in enumerate(result) if i not in result[n + 1:]]
     return rec_list
 
 # Wave 5
+'''
+Determine a list of recommended movies. Add to the list if:
+The user has not watched it
+At least one of the user's friends has watched
+The "genre" of the movie is the same as the user's most frequent genre
+'''
 def get_new_rec_by_genre(user_data):
 
     # No recommendation if user watched list is empty
@@ -176,6 +213,11 @@ def get_new_rec_by_genre(user_data):
                 result.append(movie)
     return result
 
+'''
+Determine a list of recommended movies. Add to the list if:
+The movie is in the user's "favorites"
+None of the user's friends have watched it
+'''
 def get_rec_from_favorites(user_data):
 
     mine_watched = {}
