@@ -290,13 +290,3 @@ def get_rec_from_favorites(user_data):
        
        
 
-# test program starts here
-""" new_movie1 = create_movie("m1", "ab", 3)
-new_movie2 = create_movie("m2", "ac", 4)
-new_movie3 = create_movie("m3", "ad", 2)
-new_movie4 = create_movie("m4", "aef", 1)
-
-user_data = { "watchlist": [new_movie1, new_movie2, new_movie3, new_movie4],
-            "watched" : [new_movie1, new_movie2, new_movie3, new_movie4]}
-    
-get_most_watched_genre(user_data) """
