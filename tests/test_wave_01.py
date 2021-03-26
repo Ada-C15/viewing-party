@@ -2,7 +2,6 @@ import pytest
 # NOTE: In production code, we developers should change import * to something more specific. Due to some constraints of this project, we will import * in our test files.
 from viewing_party.main import *
 
-
 def test_create_movie_all_params_valid_returns_movie():
     # Arrange
     movie_title = "Title A"
@@ -77,7 +76,7 @@ def test_add_to_watched_adds_movie_to_user_watched():
     assert updated_data["watched"][0]["genre"] is "Horror"
     assert updated_data["watched"][0]["rating"] is 3.5
 
-
+ 
 def test_add_to_watchlist_adds_movie_to_user_watchlist():
     # Arrange
     movie = {
