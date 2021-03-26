@@ -40,7 +40,7 @@ def watch_movie(user_data, title):
         
     return user_data
 
-#---------------------------------------------WAVE 2------------------------------------------------------
+#---------------------------------------------WAVE 2----------------------------------------
 
 def get_watched_avg_rating(user_data):
     #initialise the variables that will store value
@@ -52,7 +52,8 @@ def get_watched_avg_rating(user_data):
     #guard clause to handle bad data
     if(len(watched_list) == 0):
         return 0.0
-    #iterate over the users watched movie dictionary
+    
+    #get the ratings from the users watched movie dictionary and get the total
     for watched_movie in watched_list:
         #as it iterates it finds the ratings and does the calculation below
         sum_of_ratings = sum_of_ratings + watched_movie["rating"]
@@ -66,24 +67,28 @@ def get_watched_avg_rating(user_data):
 
 
 def get_most_watched_genre(user_data):
-    #create a variable to store the users watched dictionary
+    
+    #create a variable to store the list of movie dictionaries in the users watched dictionary
     watched_list = user_data["watched"]
 
     #guard clause
     if(len(watched_list) == 0):
         return None
 
-    # Create dict genre_counts with key as genre name and value as frequency of that genre
+    # keep a count of the frequency of that genre, this dict will store the genre values as keys and the 
+    #number of times they repeat as the values so, genre_count = {"fantasy": 1, intrigue:3}
     genre_count = {}
 
     # Iterate over the watched movie list and populate the genre_counts dict
     for movie in watched_list:
         genre = movie["genre"]
         # if the genre does not exist in the genre_counts dict, initialize it to 0
+        #genre_count keys is the same a s
         if (genre not in genre_count.keys()):
+            #populate the genre_count dict: add this key value pair 
             genre_count[genre] = 0
         
-        # Add one to increment the frequency count for that genre
+        # for every one genre_count that gets populated add 1 to reflect the number of times it appears in this dictionary
         genre_count[genre] += 1
         
     # find the nax value of the genre_counts.values() ==> max frequency
@@ -118,7 +123,7 @@ def get_unique_watched(user_data):
             if (does_movie_exist_in_list(friend_movie["title"], users_watched_movies_copy)):
                 
                 #then remove the movie by calling the helper function
-                remove_movie_from_list(friend_movie["title"], users_watched_movies_copy)
+                remove_duplicate_movie_from_list(friend_movie["title"], users_watched_movies_copy)
     
     return users_watched_movies_copy         
 
@@ -160,7 +165,7 @@ def add_movie_to_list(movie, movie_list):
         movie_list.append(movie)
 
 #helper function
-def remove_movie_from_list(movie_title, movie_list):
+def remove_duplicate_movie_from_list(movie_title, movie_list):
     for i in range(len(movie_list)): 
         if movie_list[i]['title'] == movie_title: 
             del movie_list[i] 
@@ -207,7 +212,7 @@ def is_movie_host_in_subscription_list(movie_host, subscription_list):
     return False
 
 
-##-----------------------------WAVE 5----------------------------------------------------------------------    
+##-----------------------------WAVE 5-----------------------------------------------------------------   
 
 def get_new_rec_by_genre(user_data):
     
@@ -234,106 +239,56 @@ def get_new_rec_by_genre(user_data):
     return list_of_recommended_movies
                     
 def get_rec_from_favorites(user_data):
+
+#create a copy of the users watched data as i will remove items from it and dont want it to affect the 
+    #original data
+    list_of_recommended_favorite_movies = user_data["favorites"].copy()
     
-    #initialize the new list of recommended movies
+    #iterate over the user_data's friends dictionary
+    for friend_dict in user_data["friends"]:
+        
+        #create a new variable to store the friends watched dictionary
+        friend_movies_list = friend_dict["watched"]
+        
+        #iterate over the friends watched movie list to get the elements which is in dict format
+        for friend_movie in friend_movies_list:
+            
+            #if the movie exists in the list call the helper funtions with the given parameters is true then:
+            if (does_movie_exist_in_list(friend_movie["title"], list_of_recommended_favorite_movies)):
+                
+                #then remove the movie by calling the helper function
+                remove_duplicate_movie_from_list(friend_movie["title"], list_of_recommended_favorite_movies)
+    
+    return list_of_recommended_favorite_movies  
+    
+    
+''' def get_rec_from_favorites(user_data): #second approach    
+#initialize the new list of recommended movies
     list_of_recommended_favorite_movies = []
     list_of_friends_watched_movies = []
     #create a variable to store the list of dictionary of users favorites 
-    user_favorites_list = user_data["favorites"]
+    
+    if not user_data["favorites"]:
+        return None
     
     #create a variable to store the list of dictionary of friends watchlist    
-    friends_list = user_data["friends"]
-    
-    for friends_watched_list in friends_list["watched"]:
-        for each_movies in friends_watched_list:
-            list_of_friends_watched_movies.append(each_movies)
+    for friends_list in user_data["friends"]:
+        for friends_mov in friends_list["watched"]:
+           list_of_friends_watched_movies.append(friends_mov)
     
     #iterate over the movies in the users fav movie dict
-    for user_fav_movie_dict in user_favorites_list:
-        if user_fav_movie_dict not in list_of_friends_watched_movies:
-            list_of_recommended_favorite_movies.append(user_fav_movie_dict)
-    return list_of_recommended_favorite_movies
+    for movies in user_data["favorites"]:
+        if movies not in list_of_friends_watched_movies:
+            list_of_recommended_favorite_movies.append(movies)
             
-       """  for friends_movie_dict in friends_watched_list:
-            
-            #A movie should be added to this list if and only if:
-            # The movie is in the user's "favorites"
-            # None of the user's friends have watched it
-            
-            # If user's fav movie is not in friend watched list, add movie from user into a new list
-            
-            #call the helper function to add the unique movies 
-            if  (add_movie_to_list(user_fav_movie_dict, friends_watched_list)):
-                
-                list_of_recommended_favorite_movie.append(user_fav_movie_dict) """
-
-                
-        
-        
-        
-"""     for friends_movie in friends_watched_list:
-            
-            if (not does_movie_exist_in_list(friends_movie, user_favorites_list)):
-            
-                #then call the helper function with the given parameters to add the friend movie to the list
-                add_movie_to_favorite_list(freinds_movie, list_of_recommended_favorite_movie)
-
-    return  list_of_recommended_favorite_movie
-            
-#helper functions
-def does_movie_exist_in_list(movie_title, movie_list):
-    for mov in movie_list:
-        if (mov["title"] == movie_title):
-            return True
-    
-    return False     
-  
-#helper function
-def add_movie_to_favorite_list(movie, movie_list):
-    if (not does_movie_exist_in_list(movie, movie_list)):
-        movie_list.append(movie) """
-
-        
-        
-        
-        
-                    
-""" def get_rec_from_favorites(user_data):
-    #initialize the new list of recommended movies
-    list_of_recommended_favorite_movie = []
-    
-    #create a new variable 
-    most_watched_genre = get_most_watched_genre(user_data) 
-    
-    list_of_users_recommended_movies = get_new_rec_by_genre(user_data)
-    
-    users_favorites = user_data["favorites"]
-    
-    for movies in users_favorites["title"]:
-        
-        for recommended_mov in list_of_users_recommended_movies:
-            if recommended_mov in movies:
-                list_of_recommended_favorite_movie.append(reco)
-            
-            if (not does_favorite_movie_exist_in_list(friend_movie["title"], movies)):
-                list_of_recommended_favorite_movie.append(friend_movie, friends_unique_watched)
-    
-    return list_of_recommended_favorite_movie     
-    
-    
-    
-def does_favorite_movie_exist_in_list(movie_title, movie_list):
-    for mov in movie_list:
-        if (mov["title"] == movie_title):
-            return True
-
-    return False                
-        
-def add_movie_to_list(movie, movie_list):
-    if (not does_movie_exist_in_list(movie["title"], movie_list)):
-        movie_list.append(movie) """
-
-
+    return list_of_recommended_favorite_movies       ''' 
+       
+''' def get_all_friends_watched_mov(user_data):
+    for friends_list in user_data["friends"]:
+        for friends_mov in friends_list["watched"]:
+        list_of_friends_watched_movies.append(friends_mov) d '''
+       
+       
 
 # test program starts here
 """ new_movie1 = create_movie("m1", "ab", 3)
