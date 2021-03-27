@@ -59,25 +59,24 @@ def get_watched_avg_rating(user_data):
 
 def get_most_watched_genre(user_data):
 
-    genre_count_list = []
-    genre_stats_dict = dict()
+    genre_count = []
+    genre_stats = dict()
     most_watched_genre = ""
 
     if not user_data["watched"]:
         return None 
     for keys, values in user_data.items():
         for watched_movies in values:
-            genre_count_list.append(watched_movies['genre'])
+            genre_count.append(watched_movies['genre'])
     
 
-    for value in genre_count_list:
-        if value not in genre_stats_dict:
-            genre_stats_dict[value] = 1
+    for value in genre_count:
+        if value not in genre_stats:
+            genre_stats[value] = 1
         else:
-            genre_stats_dict[value] +=1
-    print(genre_stats_dict)
+            genre_stats[value] +=1
 
-    most_watched_genre_tuple = [(value, key) for key, value in genre_stats_dict.items()]
+    most_watched_genre_tuple = [(value, key) for key, value in genre_stats.items()]
     most_watched_genre = max(most_watched_genre_tuple)[1]
     return most_watched_genre
 
@@ -150,6 +149,65 @@ def get_available_recs(user_data):
             recommendations_list.append(temp[i])
     
     return recommendations_list
+
+def get_new_rec_by_genre(user_data):
+    count_list = []
+    genre_stats = dict()
+    most_watched_genre = ""
+    recommendations_by_genre = []
+
+    if not user_data["watched"]:
+        return recommendations_by_genre
+
+    for item in user_data["watched"]:
+        count_list.append(item["genre"])
+    
+    
+    for value in count_list:
+        if value not in genre_stats:
+            genre_stats[value] = 1
+        else:
+            genre_stats[value] += 1
+    
+    temp = [(value, key) for key, value in genre_stats.items()]
+    most_watched_genre = max(temp)[1]
+
+    for item in user_data["friends"]:
+        for k,v in item.items():
+            for item in v:
+                if item["title"] not in user_data["watched"] and item["genre"] == most_watched_genre:
+                    recommendations_by_genre.append(item)
+    
+    return recommendations_by_genre
+
+
+def get_rec_from_favorites(user_data):
+    users_favorites = []
+    friends_watched = []
+    temp = []
+    recommendations_by_favorites = []
+
+    for item in user_data["favorites"]:
+        users_favorites.append(item)
+    
+    for item in user_data["friends"]:
+        for key,value in item.items():
+            for item in value:
+                for k,v in item.items():
+                    friends_watched.append(v)
+    
+    for item in user_data["watched"]:
+        for key,value in item.items():
+            if value not in friends_watched:
+                temp.append(item)
+    
+    for item in temp:
+        if item in users_favorites:
+            recommendations_by_favorites.append(item)
+    
+    return recommendations_by_favorites
+
+    
 
 
 
