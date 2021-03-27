@@ -2,6 +2,7 @@ import pytest
 # NOTE: In production code, we developers should change import * to something more specific. Due to some constraints of this project, we will import * in our test files.
 from viewing_party.main import *
 
+# ALL PASSED 10:23PM ON 3.24.21
 
 def test_create_movie_all_params_valid_returns_movie():
     # Arrange
@@ -16,7 +17,7 @@ def test_create_movie_all_params_valid_returns_movie():
     assert new_movie["title"] is "Title A"
     assert new_movie["genre"] is "Horror"
     assert new_movie["rating"] is 3.5
-
+# # ^^ PASSED 3/24/21
 
 def test_create_movie_no_title_returns_none():
     # Arrange
@@ -29,7 +30,7 @@ def test_create_movie_no_title_returns_none():
 
     # Assert
     assert new_movie is None
-
+# PASSED 3/24/21
 
 def test_create_movie_no_genre_returns_none():
     # Arrange
@@ -42,7 +43,7 @@ def test_create_movie_no_genre_returns_none():
 
     # Assert
     assert new_movie is None
-
+# PASSED 3/24/21
 
 def test_create_movie_no_rating_returns_none():
     # Arrange
@@ -55,7 +56,7 @@ def test_create_movie_no_rating_returns_none():
 
     # Assert
     assert new_movie is None
-
+# PASSED 3/24/21
 
 def test_add_to_watched_adds_movie_to_user_watched():
     # Arrange
@@ -135,7 +136,7 @@ def test_watch_movie_moves_movie_from_watchlist_to_watched():
                 "genre": "Action",
                 "rating": 2.0
             },
-            movie_to_watch
+            movie_to_watch 
         ],
         "watched": [
             {
@@ -153,7 +154,6 @@ def test_watch_movie_moves_movie_from_watchlist_to_watched():
     assert len(updated_data["watchlist"]) is 1
     assert len(updated_data["watched"]) is 2
     assert movie_to_watch in updated_data["watched"]
-
 
 def test_watch_movie_does_nothing_if_movie_not_in_watchlist():
     # Arrange

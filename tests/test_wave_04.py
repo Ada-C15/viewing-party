@@ -44,7 +44,7 @@ def test_get_available_recs_returns_appropriate_recommendations_for_valid_input(
 
     # Arrange
     assert len(recommendations) is 2
-    assert {"title": "Title A", "host": "Service A"} in recommendations
+    assert {"title": "Title A", "host": "Service A"} in recommendations # is dict w 2 key-val pairs in recs..?
     assert {"title": "Title B", "host": "Service B"} in recommendations
 
 
