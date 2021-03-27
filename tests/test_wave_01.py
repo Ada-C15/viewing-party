@@ -16,7 +16,7 @@ def test_create_movie_all_params_valid_returns_movie():
     assert new_movie["title"] is "Title A"
     assert new_movie["genre"] is "Horror"
     assert new_movie["rating"] is 3.5
-
+#create a dictionary 
 
 def test_create_movie_no_title_returns_none():
     # Arrange
