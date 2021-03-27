@@ -1,7 +1,7 @@
 import pytest
 from viewing_party.main import *
 
-
+# TEST 10 - WAVE 2 - PASSED
 def test_get_watched_avg_rating_calculates_watched_average_rating():
     # Arrange
     janes_data = {
@@ -30,7 +30,7 @@ def test_get_watched_avg_rating_calculates_watched_average_rating():
     # Assert
     assert average == pytest.approx(3.56666666664)
 
-
+# TEST 11 - WAVE 2 - PASSED
 def test_get_watched_avg_rating_returns_zero_for_empty_list():
     # Arrange
     janes_data = {
@@ -45,8 +45,10 @@ def test_get_watched_avg_rating_returns_zero_for_empty_list():
     assert average == pytest.approx(0.0)
 
 
+# TEST 12 - WAVE 2  - PASSED!
+
 def test_get_most_watched_genre_returns_most_frequent_genre_from_list():
-    # Arrange
+    # Arrange   # janes_data["wathed"][0]["title"]
     janes_data = {
         "watched": [
             {
@@ -78,7 +80,7 @@ def test_get_most_watched_genre_returns_most_frequent_genre_from_list():
     # Assert
     assert popular_genre is "Intrigue"
 
-
+# TEST 13 - WAVE 2 - PASSED!
 def test_get_most_watched_genre_returns_None_if_empty_watched():
     # Arrange
     janes_data = {
