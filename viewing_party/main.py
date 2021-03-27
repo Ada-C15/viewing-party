@@ -126,7 +126,30 @@ def get_friends_unique_watched(user_data):
 
 
 def get_available_recs(user_data):
-    pass
+    user_watched = []
+    user_subs = []
+    temp = []
+    recommendations_list = []
+
+    for item in user_data["watched"]:
+        if user_data["watched"]:
+            user_watched.append(item)
+
+    for item in user_data["subscriptions"]:
+        if user_data["subscriptions"]:
+            user_subs.append(item)
+
+    for item in user_data["friends"]:
+        for k,v in item.items():
+            for item in v:
+                if item["title"] not in user_watched and item["host"] in user_subs:
+                    temp.append(item)
+    
+    for i in range(len(temp)):
+        if temp[i] not in temp[i + 1:]:
+            recommendations_list.append(temp[i])
+    
+    return recommendations_list
 
 
 
