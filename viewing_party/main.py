@@ -74,7 +74,7 @@ def get_watched_avg_rating(user_data):
 #checks two tests on this function 
 def get_most_watched_genre(user_data):
     """
-    most "watched" genre
+    Returns most "watched" genre
     input: user_data
     output: most "watched" genre
     """
@@ -82,38 +82,22 @@ def get_most_watched_genre(user_data):
     
     if user_data["watched"]:
         for movie in user_data["watched"]:
-            genre = movie["genre"]
+            genre = movie["genre"]  
             if genre not in genre_dict:
                 genre_dict[genre] = 1
             else: 
                 genre_dict[genre] += 1
+
         count = 0 
-        # for genre_count in genre_dict.values(): #genre_count is value 2,3,4
-        #     if genre_count > count:
-        #         count = genre_count 
-
-
         max_genre = None 
-        for genre, genre_count in genre_dict.items(): #genre_count is value 2,3,4
+        for genre, genre_count in genre_dict.items(): #genre_count are values
             if genre_count > count:
                 count = genre_count 
                 max_genre = genre 
         return max_genre 
-        
-    #genre_dict 
-        #     genre_list.append(movie["genre"])
-
-        # most_watched_genre = max(set(genre_list), key = genre_list.count)
-        # return most_watched_genre
+  
     else:
         return None 
-
-# if not user_data["watched"]:
-    #     return None
-    # else: 
-    #     genre_list = [element["genre"] for element in user_data["watched"]]
-    #     genre_count = Counter(genre_list).most_common()
-    #     return genre_count[0][0]
 
 #Wave_3-----------------------------
 
