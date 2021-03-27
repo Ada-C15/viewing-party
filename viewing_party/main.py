@@ -143,6 +143,7 @@ def get_friends_unique_watched(user_data):
 
     user_watched = user_data["watched"]
     unique_watched = []
+    
     friend_watched = friend_watched_list(user_data)
 
     for movie in friend_watched:
@@ -156,6 +157,7 @@ def get_friends_unique_watched(user_data):
 #two tests in this function
 def get_available_recs(user_data):
     """
+    get available recs 
     input: user_data
     output: recommendated movie list 
     """
