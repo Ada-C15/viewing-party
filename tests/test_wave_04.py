@@ -2,7 +2,7 @@ import pytest
 from viewing_party.main import *
 
 
-def test_get_available_recs_returns_appropriate_recommendations_for_valid_input():
+def test_get_available_recs():
     # Arrange
     amandas_data = {
         "subscriptions": ["Service A", "Service B"],
