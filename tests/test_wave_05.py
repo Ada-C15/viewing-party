@@ -2,6 +2,7 @@ import pytest
 from viewing_party.main import *
 
 
+# TEST 21 - WAVE 5 - PASSED
 def test_get_new_rec_by_genre_returns_appropriate_recommendations_for_large_amount_of_valid_input():
     # Arrange
     sonyas_data = {
@@ -54,6 +55,7 @@ def test_get_new_rec_by_genre_returns_appropriate_recommendations_for_large_amou
     assert {"title": "Title E", "genre": "Intrigue"} in recommendations
 
 
+# TEST 22 - WAVE 5 - PASSED
 def test_get_new_rec_by_genre_returns_empty_list_when_sonyas_watched_list_is_empty():
     # Arrange
     sonyas_data = {
@@ -89,6 +91,7 @@ def test_get_new_rec_by_genre_returns_empty_list_when_sonyas_watched_list_is_emp
     assert len(recommendations) is 0
 
 
+# TEST 23 - WAVE 5 - PASSED
 def test_get_new_rec_by_genre_returns_empty_list_when_friends_watched_lists_are_empty():
     # Arrange
     sonyas_data = {
@@ -115,7 +118,7 @@ def test_get_new_rec_by_genre_returns_empty_list_when_friends_watched_lists_are_
     assert len(recommendations) is 0
 
 
-
+# TEST 24 - WAVE 5 - PASSED
 def test_get_new_rec_by_genre_returns_empty_list_when_sonya_has_no_favories_and_no_unique_movie_in_watched_list():
     # Arrange
     sonyas_data = {
@@ -150,49 +153,49 @@ def test_get_new_rec_by_genre_returns_empty_list_when_sonya_has_no_favories_and_
     # Assert
     assert len(recommendations) is 0
 
-
+# TEST 25 - WAVE 5 
 def test_get_rec_from_favorites_returns_expected_list_from_valid_input():
     # Arrange
     sonyas_data = {
-        "watched": [
-            {
-                "title": "Title A"
-            },
-            {
-                "title": "Title B"
-            },
-            {
-                "title": "Title C"
-            }
-        ],
-        "favorites": [
-            {
-                "title": "Title A"
-            },
-            {
-                "title": "Title B"
-            }
-        ],
-        "friends": [
-            {
-                "watched": [
-                    {
-                        "title": "Title B"
-                    }
-                ]
-            },
-            {
-                "watched": [
-                    {
-                        "title": "Title C"
-                    },
-                    {
-                        "title": "Title D"
-                    }
-                ]
-            }
-        ]
-    }
+                    "watched": [
+                        {
+                            "title": "Title A"
+                        },
+                        {
+                            "title": "Title B"
+                        },
+                        {
+                            "title": "Title C"
+                        }
+                    ],
+                    "favorites": [
+                        {
+                            "title": "Title A"
+                        },
+                        {
+                            "title": "Title B"
+                        }
+                    ],
+                    "friends": [
+                        {
+                            "watched": [
+                                {
+                                    "title": "Title B"
+                                }
+                            ]
+                        },
+                        {
+                            "watched": [
+                                {
+                                    "title": "Title C"
+                                },
+                                {
+                                    "title": "Title D"
+                                }
+                            ]
+                        }
+                    ]
+                }
 
     # Act
     recommendations = get_rec_from_favorites(sonyas_data)

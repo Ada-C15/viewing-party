@@ -2,8 +2,8 @@ import pytest
 # NOTE: In production code, we developers should change import * to something more specific. Due to some constraints of this project, we will import * in our test files.
 from viewing_party.main import *
 
-
-def test_create_movie_all_params_valid_returns_movie():
+# TEST 1 - WAVE 1 - PASSED
+def test_create_movie_all_params_valid_returns_movie(): # passed
     # Arrange
     movie_title = "Title A"
     genre = "Horror"
@@ -17,7 +17,7 @@ def test_create_movie_all_params_valid_returns_movie():
     assert new_movie["genre"] is "Horror"
     assert new_movie["rating"] is 3.5
 
-
+# TEST 2 - WAVE 1 - PASSED
 def test_create_movie_no_title_returns_none():
     # Arrange
     movie_title = None
@@ -30,7 +30,7 @@ def test_create_movie_no_title_returns_none():
     # Assert
     assert new_movie is None
 
-
+# TEST 3 - WAVE 1 - PASSED
 def test_create_movie_no_genre_returns_none():
     # Arrange
     movie_title = "Title A"
@@ -43,7 +43,7 @@ def test_create_movie_no_genre_returns_none():
     # Assert
     assert new_movie is None
 
-
+# TEST 4 - WAVE 1 - PASSED
 def test_create_movie_no_rating_returns_none():
     # Arrange
     movie_title = "Title A"
@@ -56,7 +56,7 @@ def test_create_movie_no_rating_returns_none():
     # Assert
     assert new_movie is None
 
-
+# TEST 5 - WAVE 1 - PASSED
 def test_add_to_watched_adds_movie_to_user_watched():
     # Arrange
     movie = {
@@ -66,8 +66,7 @@ def test_add_to_watched_adds_movie_to_user_watched():
     }
     user_data = {
         "watched": []
-    }
-
+    } # "watched" = [{movie_1_dict, movie_2_dict...}]
     # Act
     updated_data = add_to_watched(user_data, movie)
 
@@ -77,7 +76,7 @@ def test_add_to_watched_adds_movie_to_user_watched():
     assert updated_data["watched"][0]["genre"] is "Horror"
     assert updated_data["watched"][0]["rating"] is 3.5
 
-
+# TEST 6 - WAVE 1 - PASSED
 def test_add_to_watchlist_adds_movie_to_user_watchlist():
     # Arrange
     movie = {
@@ -98,15 +97,16 @@ def test_add_to_watchlist_adds_movie_to_user_watchlist():
     assert updated_data["watchlist"][0]["genre"] is "Horror"
     assert updated_data["watchlist"][0]["rating"] is 3.5
 
+# TEST 7 - WAVE 1  - PASSED
 
 def test_watch_movie_moves_movie_from_watchlist_to_empty_watched():
-    # Arrange
-    janes_data = {
+    # Arrange  ## janes_data is user_data
+    janes_data = { 
         "watchlist": [{
             "title": "Title A",
             "genre": "Fantasy",
-            "rating": 4.8
-        }],
+            "rating": 4.8 }
+            ],
         "watched": []
     }
 
@@ -120,7 +120,7 @@ def test_watch_movie_moves_movie_from_watchlist_to_empty_watched():
     assert updated_data["watched"][0]["genre"] is "Fantasy"
     assert updated_data["watched"][0]["rating"] is 4.8
 
-
+# TEST 8 - WAVE 1 - PASSED
 def test_watch_movie_moves_movie_from_watchlist_to_watched():
     # Arrange
     movie_to_watch = {
@@ -128,23 +128,20 @@ def test_watch_movie_moves_movie_from_watchlist_to_watched():
         "genre": "Fantasy",
         "rating": 4.8
     }
-    janes_data = {
-        "watchlist": [
-            {
-                "title": "Title B",
-                "genre": "Action",
-                "rating": 2.0
-            },
-            movie_to_watch
-        ],
-        "watched": [
-            {
-                "title": "Title C",
-                "genre": "Intrigue",
-                "rating": 3.9
-            }
-        ]
-    }
+    janes_data = {"watchlist": [
+                                {"title": "Title B",
+                                "genre": "Action",
+                                "rating": 2.0
+                                }, 
+                                movie_to_watch
+                                ],
+                                "watched": [
+                                {"title": "Title C",
+                                "genre": "Intrigue",
+                                "rating": 3.9
+                                }
+                                ]
+                                }
 
     # Act
     updated_data = watch_movie(janes_data, movie_to_watch["title"])
@@ -154,7 +151,7 @@ def test_watch_movie_moves_movie_from_watchlist_to_watched():
     assert len(updated_data["watched"]) is 2
     assert movie_to_watch in updated_data["watched"]
 
-
+# TEST 9 - WAVE 1 - PASSED
 def test_watch_movie_does_nothing_if_movie_not_in_watchlist():
     # Arrange
     movie_to_watch = {
