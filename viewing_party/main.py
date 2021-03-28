@@ -1,23 +1,19 @@
 import pytest
 from pytest import approx
 
-# create_movie function
 def create_movie(movie_title, genre, rating):
     if movie_title == None or genre == None or rating == None:
         return None
     return {"title": movie_title, "genre": genre, "rating": rating}
 
-# add_to_watched function
 def add_to_watched(user_data, movie):
     user_data["watched"].append(movie)
     return user_data
 
-# add_to_watchlist function
 def add_to_watchlist(user_data, movie):
     user_data["watchlist"].append(movie)
     return user_data
 
-# watch_movie function
 def watch_movie(user_data, movie):
     watchlist = user_data["watchlist"]
     watchedlist = user_data["watched"]
@@ -27,7 +23,6 @@ def watch_movie(user_data, movie):
             watchedlist.append(data)
     return user_data
 
-# get_most_watched_genre function
 def get_most_watched_genre(user_data):
     genre_tally = {}
     movie_list = user_data["watched"]
@@ -49,7 +44,6 @@ def get_most_watched_genre(user_data):
             if value == max_value:
                 return key
 
-# get_watched_avg_rating function
 def get_watched_avg_rating(user_data):
     rating_total = 0
     ratings = []
@@ -81,7 +75,6 @@ def get_unique_watched(user_data):
     for movie in user_watched_list:
         if movie not in friends_watched_list:
             unique_watched_list.append(movie)
-
     return unique_watched_list
 
 def get_friends_unique_watched(user_data):
@@ -103,41 +96,40 @@ def get_friends_unique_watched(user_data):
             else:
                 unique_watched_list.append(movie)
     return unique_watched_list
-    # return unique_watched_list
 
-amandas_data = {
-        "watched": [
-            {
-                "title": "Title B"
-            },
-            {
-                "title": "Title C"
-            }
-        ],
-        "friends": [
-            {
-                "watched": [
-                    {
-                        "title": "Title A"
-                    },
-                    {
-                        "title": "Title C"
-                    }
-                ]
-            },
-            {
-                "watched": [
-                    {
-                        "title": "Title A"
-                    },
-                    {
-                        "title": "Title D"
-                    },
-                    {
-                        "title": "Title E"
-                    }
-                ]
-            }
-        ]
-    }
-get_friends_unique_watched(amandas_data)
+# amandas_data = {
+#         "watched": [
+#             {
+#                 "title": "Title B"
+#             },
+#             {
+#                 "title": "Title C"
+#             }
+#         ],
+#         "friends": [
+#             {
+#                 "watched": [
+#                     {
+#                         "title": "Title A"
+#                     },
+#                     {
+#                         "title": "Title C"
+#                     }
+#                 ]
+#             },
+#             {
+#                 "watched": [
+#                     {
+#                         "title": "Title A"
+#                     },
+#                     {
+#                         "title": "Title D"
+#                     },
+#                     {
+#                         "title": "Title E"
+#                     }
+#                 ]
+#             }
+#         ]
+#     }
+# get_friends_unique_watched(amandas_data)
