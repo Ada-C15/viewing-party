@@ -5,6 +5,7 @@ from viewing_party.main import *
 
 def test_create_movie_all_params_valid_returns_movie():
     # Arrange
+    
     movie_title = "Title A"
     genre = "Horror"
     rating = 3.5
