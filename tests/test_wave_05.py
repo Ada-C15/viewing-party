@@ -196,7 +196,7 @@ def test_get_rec_from_favorites_returns_expected_list_from_valid_input():
 
     # Act
     recommendations = get_rec_from_favorites(sonyas_data)
-
+    
     # Assert
     assert len(recommendations) is 1
     assert {"title": "Title A"} in recommendations
