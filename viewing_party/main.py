@@ -66,23 +66,53 @@ def get_watched_avg_rating(user_data):
     else:
         return 0
 
+def get_unique_watched(user_data):
+    unique_watched_list = []
+    user_watched_list = []
+    friends_watched_list = []
+    user_watched_values = user_data["watched"]
+    user_friends_values = user_data["friends"]
+
+    for movie in user_watched_values:
+        user_watched_list.append(movie)
+    for friend in user_friends_values:
+        for movie in friend["watched"]:
+            friends_watched_list.append(movie)
+    for movie in user_watched_list:
+        if movie not in friends_watched_list:
+            unique_watched_list.append(movie)
+
+    return unique_watched_list
+
+def get_friends_unique_watched(user_data):
+    unique_watched_list = []
+    user_watched_list = []
+    friends_watched_list = []
+    user_watched_values = user_data["watched"]
+    user_friends_values = user_data["friends"]
+
+    for movie in user_watched_values:
+        user_watched_list.append(movie)
+    for friend in user_friends_values:
+        for movie in friend["watched"]:
+            friends_watched_list.append(movie)
+    for movie in friends_watched_list:
+        if movie not in user_watched_list:
+            if movie in unique_watched_list:
+                continue
+            else:
+                unique_watched_list.append(movie)
+    return unique_watched_list
+    # return unique_watched_list
+
 amandas_data = {
         "watched": [
-            {
-                "title": "Title A"
-            },
             {
                 "title": "Title B"
             },
             {
                 "title": "Title C"
-            },
-            {
-                "title": "Title D"
-            },
-            {
-                "title": "Title E"
-            },
+            }
         ],
         "friends": [
             {
@@ -104,21 +134,10 @@ amandas_data = {
                         "title": "Title D"
                     },
                     {
-                        "title": "Title F"
+                        "title": "Title E"
                     }
                 ]
             }
         ]
     }
-def get_unique_watched(user_data):
-    friends_watched = set()
-    users_watch = set()
-    
-    # returns movies that aren't in other people's data (parses over user_data first)
-    # user_data is a dictionary with 2 key-value pairs. (key 1: watched (for jane) 
-    # & key 2: friends)
-    # value for watched is a list filled with 2 dictionaries of watched movies
-    # from other friends
-    
-get_unique_watched(amandas_data)
-
+get_friends_unique_watched(amandas_data)
