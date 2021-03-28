@@ -27,7 +27,7 @@ def watch_movie(user_data, movie):
 def get_most_watched_genre(user_data):
     genre_tally = {}
     movie_list = user_data["watched"]
-    
+
     for dict in movie_list:
         for key, value in dict.items():
             if key == "genre":
@@ -110,47 +110,54 @@ def get_available_recs(user_data):
 
     for movie in friend_watched_list:
         if movie not in user_data["watched"]:
-            for description, product in movie.items():
+            for product in movie.values():
                 if product in user_data["subscriptions"]:
                     available_recs_list.append(movie)
 
     return available_recs_list
 
+"""
+get_friends_watched is a funciton that compiles a list
+of all the movies that the user's friends have watched
+as noted in their 'watched' lists.
+"""
+def get_friends_watched(user_data):
+    friends_watched_list = []
+    user_friends_values = user_data["friends"]
 
-# amandas_data = {
-#         "subscriptions": ["Service A", "Service B"],
-#         "watched": [],
-#         "friends": [
-#             {
-#                 "watched": [
-#                     {
-#                         "title": "Title A",
-#                         "host": "Service A"
-#                     },
-#                     {
-#                         "title": "Title C",
-#                         "host": "Service C"
-#                     }
-#                 ]
-#             },
-#             {
-#                 "watched": [
-#                     {
-#                         "title": "Title A",
-#                         "host": "Service A"
-#                     },
-#                     {
-#                         "title": "Title B",
-#                         "host": "Service B"
-#                     },
-#                     {
-#                         "title": "Title D",
-#                         "host": "Service D"
-#                     }
-#                 ]
-#             }
-#         ]
-#     }
+    for friend in user_friends_values:
+        for movie in friend["watched"]:
+            friends_watched_list.append(movie)
 
+    return friends_watched_list
 
-# get_available_recs(amandas_data)
+#  WORKING ON THIS ONE NOW! ****************
+def get_new_rec_by_genre(user_data):
+    user_watched_list = user_data["watched"]
+    friends_watched_list = get_friends_watched(user_data)
+    reccomendation_list = []
+
+    if user_data["watched"] != []:
+        for movie in friends_watched_list:
+            if movie not in user_watched_list:
+                reccomendation_list.append(movie)
+        return reccomendation_list
+    else:
+        return reccomendation_list
+
+def get_rec_from_favorites(user_data):
+    friends_watched = get_friends_watched(user_data)
+    available_recs_list = []
+    list_names = []
+    user_favorite_list = user_data["favorites"]
+
+    if user_data["watched"] != []:
+            for movie in user_favorite_list:
+                if movie in friends_watched:
+                    continue
+                elif movie not in friends_watched:
+                    available_recs_list.append(movie)
+                return available_recs_list
+    else:
+        return available_recs_list
+
