@@ -148,6 +148,7 @@ def test_watch_movie_moves_movie_from_watchlist_to_watched():
 
     # Act
     updated_data = watch_movie(janes_data, movie_to_watch["title"])
+    print(movie_to_watch["title"])
 
     # Assert
     assert len(updated_data["watchlist"]) is 1
