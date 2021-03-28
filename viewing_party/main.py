@@ -1,4 +1,5 @@
 # Nandita Gilroy's Viewing Party Project!
+
 def create_movie(movie_title, genre, rating):
     new_movie = {}
     if movie_title and genre and rating:
@@ -37,18 +38,18 @@ def get_watched_avg_rating(user_data):
 def get_most_watched_genre(user_data):
     genres = {}
     popular_genre = None
-    counter = 0
     for movie in user_data["watched"]:
         current_genre = movie["genre"]
         if current_genre not in genres:
             genres[current_genre] = 1
         else:
             genres[current_genre] += 1
-
-    for genre, occurances in genres.items():
+    
+    counter = 0
+    for genre_name, occurances in genres.items():
         if occurances > counter:
             counter = occurances
-            popular_genre = genre
+            popular_genre = genre_name
     return popular_genre
 
 def get_unique_watched(user_data):
@@ -74,8 +75,6 @@ def get_available_recs(user_data):
     recommendations = []
     for friend in user_data["friends"]:
         for movie in friend["watched"]:
-            # If they have the movie subscription and it hasn't been added yet, 
-            # add movie to recommendations
             if movie["host"] in user_data["subscriptions"] and movie not in recommendations:
                 recommendations.append(movie)
     return recommendations
