@@ -131,7 +131,6 @@ def get_friends_watched(user_data):
 
     return friends_watched_list
 
-#  WORKING ON THIS ONE NOW! ****************
 def get_new_rec_by_genre(user_data):
     user_watched_list = user_data["watched"]
     friends_watched_list = get_friends_watched(user_data)
@@ -160,4 +159,3 @@ def get_rec_from_favorites(user_data):
                 return available_recs_list
     else:
         return available_recs_list
-
