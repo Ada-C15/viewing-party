@@ -115,4 +115,36 @@ def get_available_recs(user_data):
                 recommendations.append({"title": movie["title"], "host": movie["host"]})
 
     return recommendations
-        
+
+
+def get_new_rec_by_genre(user_data):
+
+    friends_movies = []
+    for friend in user_data["friends"]:
+        for watched in friend["watched"]: 
+            friends_movies.append({"title": watched["title"], "genre": watched["genre"]})
+
+    recommendations = []
+    for friend_movie in friends_movies:
+        for user_movie in user_data["watched"]:
+            if (user_movie["title"] != friend_movie["title"] and 
+            user_movie["genre"] == friend_movie["genre"] and 
+            friend_movie not in recommendations):
+                recommendations.append({"title": friend_movie["title"], "genre": friend_movie["genre"]})
+
+    return recommendations
+
+
+def get_rec_from_favorites(user_data):
+
+    friends_movies = []
+    for friend in user_data["friends"]:
+        for watched in friend["watched"]: 
+            friends_movies.append({"title": watched["title"]})
+    
+    recommendations = []
+    for movie in user_data["favorites"]:
+        if movie not in friends_movies:
+            recommendations.append({"title": movie["title"]})
+    
+    return recommendations
