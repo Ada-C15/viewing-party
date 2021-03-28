@@ -134,15 +134,15 @@ def get_friends_watched(user_data):
 def get_new_rec_by_genre(user_data):
     user_watched_list = user_data["watched"]
     friends_watched_list = get_friends_watched(user_data)
-    reccomendation_list = []
+    recommendation_list = []
 
     if user_data["watched"] != []:
         for movie in friends_watched_list:
             if movie not in user_watched_list:
-                reccomendation_list.append(movie)
-        return reccomendation_list
+                recommendation_list.append(movie)
+        return recommendation_list
     else:
-        return reccomendation_list
+        return recommendation_list
 
 def get_rec_from_favorites(user_data):
     friends_watched = get_friends_watched(user_data)
