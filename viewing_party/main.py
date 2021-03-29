@@ -67,10 +67,10 @@ def get_watched_avg_rating(user_data):
     return float(avg_rating)
 
 def get_most_watched_genre(user_data):
-    #grab all the genres and put into watched_genre_list
+#     #grab all the genres and put into watched_genre_list
     watched_genre_list = []
     genre_count = {}
-    # most_watched_genre = []
+    most_watched_genre = []
     current_max = 0
 
     if not user_data["watched"]:
@@ -80,7 +80,7 @@ def get_most_watched_genre(user_data):
         for movie in user_data["watched"]:
             watched_genre_list.append(movie["genre"])
     
-    #go through list and count occurences of each genre. store this as key:value pairs in genre_count dictionary
+#   go through list and count occurences of each genre. store this as key:value pairs in genre_count dictionary
     
         for genre in watched_genre_list: 
             if genre in genre_count:
@@ -88,7 +88,7 @@ def get_most_watched_genre(user_data):
             else:
                 genre_count[genre] = 1
 
-#  #go through genre_count dictionary and add all the genres with the highest counts into the most_watched_genre list. 
+# go through genre_count dictionary and add all the genres with the highest counts into the most_watched_genre list. 
 
         for val in genre_count.values():
             if val >= current_max:
@@ -96,10 +96,15 @@ def get_most_watched_genre(user_data):
     
         for key, values in genre_count.items():
             if values == current_max:
-                winner = key
-            # most_watched_genre.append(key)
+                #winner = key
+                #most_watched_genre.append(winner)
 
-        return winner
+        #return winner
+
+                most_watched_genre.append(key)
+
+        return  ", ".join(most_watched_genre)
+        #return str(most_watched_genre).strip("'[]'")
 
 #************** WAVE 3 ****************
 
