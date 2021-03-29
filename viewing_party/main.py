@@ -35,7 +35,7 @@ def get_most_watched_genre(user_data):
                     genre_tally[value] += 1
                 else:
                     genre_tally[value] = 1
-            elif type == None:
+            elif description == None:
                 return None
 
     for genre, tally_count in genre_tally.items():
