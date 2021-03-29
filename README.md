@@ -228,7 +228,7 @@ In `main.py`, there should be a function named `watch_movie`. This function shou
   - add that movie to watched
   - return the `user_data`
 - If the title is not a movie in the user's watchlist:
-  - return the `user_data`
+  - return the `user_data`w
 
 ### Wave 2
 
@@ -243,7 +243,7 @@ In `main.py`, there should be a function named `get_watched_avg_rating`. This fu
   - The average rating of an empty watched list is `0.0`
 - return the average rating
 
-2. The next two tests are about a `get_most_watched_genre()` function.
+2. The asnext two tests are about a `get_most_watched_genre()` function.
 
 In `main.py`, there should be a function named `get_most_watched_genre`. This function should...
 
@@ -283,7 +283,6 @@ In `main.py`, there should be a function named `get_friends_unique_watched`. Thi
 - Return a list of dictionaries, that represents a list of movies
 
 ### Wave 4
-
 1. There are two tests about a `get_available_recs` function
 
 Create a function named `get_available_recs`
