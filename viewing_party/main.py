@@ -87,13 +87,18 @@ def get_unique_watched(user_data):
             for dict in title_list:
                 friends_watched.append(dict)
 
-    unique_watched = [movie for movie in user_data['watched'] if movie not in friends_watched]
+
+    unique_watched = [movie for movie in user_data['watched']\
+         if movie not in friends_watched]
 
     # for movie_title_dict in user_data['watched']:
     #     if movie_title_dict not in friends_watched:
     #         unique_watched.append(movie_title_dict)
 
     return unique_watched
+
+
+
 
 
 # test 16 function get_friends_unique_watched
@@ -183,8 +188,8 @@ def get_new_rec_by_genre(user_data):
 def get_rec_from_favorites(user_data):
     fave_movies = [movie for movie in user_data['favorites']]
     unique_watched = get_unique_watched(user_data)
-    reccomended_from_faves = [movie for movie in fave_movies if 
+    recommended_from_faves = [movie for movie in fave_movies if 
     movie in unique_watched]
-    return reccomended_from_faves
+    return recommended_from_faves
 
 
