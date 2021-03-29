@@ -29,21 +29,21 @@ def get_most_watched_genre(user_data):
     movie_list = user_data["watched"]
 
     for dict in movie_list:
-        for key, value in dict.items():
-            if key == "genre":
+        for description, value in dict.items():
+            if description == "genre":
                 if value in genre_tally:
                     genre_tally[value] += 1
                 else:
                     genre_tally[value] = 1
-            elif key == None:
+            elif type == None:
                 return None
 
-    for key, value in genre_tally.items():
+    for genre, tally_count in genre_tally.items():
         if True:
             all_values = genre_tally.values()
             max_value = max(all_values)
-            if value == max_value:
-                return key
+            if tally_count == max_value:
+                return genre
 
 def get_watched_avg_rating(user_data):
     rating_total = 0
@@ -52,9 +52,9 @@ def get_watched_avg_rating(user_data):
 
     if movie_list != []:
         for dict in movie_list:
-            for key, value in dict.items():
-                if key == "rating":
-                    rating_total += dict[key]
+            for description, value in dict.items():
+                if description == "rating":
+                    rating_total += dict[description]
                     ratings.append(value)
         avg_rating = pytest.approx(rating_total/len(ratings))
         return avg_rating
@@ -66,12 +66,12 @@ def get_unique_watched(user_data):
     user_watched_list = []
     friends_watched_list = []
     user_watched_values = user_data["watched"]
-    user_friends_values = user_data["friends"]
+    friends_values = user_data["friends"]
 
     for movie in user_watched_values:
         user_watched_list.append(movie)
 
-    for friend in user_friends_values:
+    for friend in friends_values:
         for movie in friend["watched"]:
             friends_watched_list.append(movie)
 
@@ -86,12 +86,12 @@ def get_friends_unique_watched(user_data):
     user_watched_list = []
     friends_watched_list = []
     user_watched_values = user_data["watched"]
-    user_friends_values = user_data["friends"]
+    friends_values = user_data["friends"]
 
     for movie in user_watched_values:
         user_watched_list.append(movie)
 
-    for friend in user_friends_values:
+    for friend in friends_values:
         for movie in friend["watched"]:
             friends_watched_list.append(movie)
 
@@ -147,14 +147,13 @@ def get_new_rec_by_genre(user_data):
 def get_rec_from_favorites(user_data):
     friends_watched = get_friends_watched(user_data)
     available_recs_list = []
-    list_names = []
     user_favorite_list = user_data["favorites"]
 
     if user_data["watched"] != []:
             for movie in user_favorite_list:
                 if movie in friends_watched:
                     continue
-                elif movie not in friends_watched:
+                else:
                     available_recs_list.append(movie)
                 return available_recs_list
     else:
