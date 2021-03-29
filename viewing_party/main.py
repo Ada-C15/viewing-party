@@ -37,7 +37,10 @@ def get_watched_avg_rating(user_data):
             if type(movie_val) == float:
                 movie_rating =  movie_val
                 sum_rating += movie_rating
-    avg_rating = sum_rating/len(user_data["watched"])
+    if len(user_data["watched"]) == 0: 
+        return 0.0
+    else:
+        avg_rating = sum_rating/len(user_data["watched"])
     return avg_rating
 
 def get_most_watched_genre(user_data): 
