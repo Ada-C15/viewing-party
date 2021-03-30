@@ -124,14 +124,6 @@ def get_new_rec_by_genre(user_data):
 def get_rec_from_favorites(user_data):
     recommended_movies = []
     users_favorites = []
-    for favorites in user_data["favorites"]:
-        users_favorites.append(favorites)
-    print(users_favorites)
-
-
-def get_rec_from_favorites(user_data):
-    recommended_movies = []
-    users_favorites = []
     friends_watched = []
     for favorites in user_data["favorites"]:
         users_favorites.append(favorites)
