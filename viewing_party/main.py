@@ -51,10 +51,7 @@ def get_most_watched_genre(user_data):
 #wave 3
 def get_unique_watched(user_data):
     final_list = user_data["watched"].copy()
-    
-    #for movie in user_data["watched"]: #add movie to the "wached" list, in list of movie dictionariers
-        #final_list.append(movie)
-    
+
     for friend in user_data["friends"]: #removed movie that friends watch from movie list
         for movie in friend["watched"]:
             if movie in final_list:
@@ -65,8 +62,11 @@ def get_unique_watched(user_data):
 def get_friends_unique_watched(user_data): #flip flop 
     final_list = []
     
-    for movie in user_data["friends"]:
-        final_list.append(movie)
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            if movie in final_list:
+                final_list.remove(movie)
+            final_list.append(movie)
     
     for movie in user_data["watched"]: #removed movie that friends watch from movie list
         if movie in final_list:
@@ -76,7 +76,17 @@ def get_friends_unique_watched(user_data): #flip flop
 
 #wave 4
 def get_available_recs(user_data):
-    pass
+    movies_friends_watched_list = get_friends_unique_watched(user_data) #wave 3
+    final_list = list()
+
+    for movie in movies_friends_watched_list:
+        if movie["host"] in user_data["subscriptions"]:
+            final_list.append(movie)
+
+
+
+    return final_list
+
 
 #wave 5
 #def get_new_rec_by_genre(user_data):
@@ -95,31 +105,37 @@ def get_available_recs(user_data):
 
 if __name__ == '__main__':
     amandas_data = {
+        "subscriptions": ["Service A", "Service B"],
         "watched": [],
         "friends": [
             {
                 "watched": [
                     {
-                        "title": "Title A"
+                        "title": "Title A",
+                        "host": "Service A"
                     },
                     {
-                        "title": "Title C"
+                        "title": "Title C",
+                        "host": "Service C"
                     }
                 ]
             },
             {
                 "watched": [
                     {
-                        "title": "Title A"
+                        "title": "Title A",
+                        "host": "Service A"
                     },
                     {
-                        "title": "Title D"
+                        "title": "Title B",
+                        "host": "Service B"
                     },
                     {
-                        "title": "Title F"
+                        "title": "Title D",
+                        "host": "Service D"
                     }
                 ]
             }
         ]
     }
-    print(get_unique_watched(amandas_data))
+    print(get_available_recs(amandas_data))
