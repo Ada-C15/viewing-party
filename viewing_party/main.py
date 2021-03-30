@@ -50,16 +50,16 @@ def get_most_watched_genre(user_data):
 
 #wave 3
 def get_unique_watched(user_data):
-    final_list = []
+    final_list = user_data["watched"].copy()
     
-    for movie in user_data["watched"]: #add movie to the "wached" list, in list of movie dictionariers
-        final_list.append(movie)
+    #for movie in user_data["watched"]: #add movie to the "wached" list, in list of movie dictionariers
+        #final_list.append(movie)
     
-    for movie in user_data["friends"]: #removed movie that friends watch from movie list
-        if movie in final_list:
-
-            final_list.remove(movie)
-    
+    for friend in user_data["friends"]: #removed movie that friends watch from movie list
+        for movie in friend["watched"]:
+            if movie in final_list:
+                final_list.remove(movie)
+        
     return final_list 
 
 def get_friends_unique_watched(user_data): #flip flop 
@@ -76,18 +76,50 @@ def get_friends_unique_watched(user_data): #flip flop
 
 #wave 4
 def get_available_recs(user_data):
+    pass
 
 #wave 5
-def get_new_rec_by_genre(user_data):
+#def get_new_rec_by_genre(user_data):
     #Consider the user's most frequently watched genre. 
     #Then, determine a list of recommended movies. 
-    frequent_genre
-    for movie in user_data("watched"):
+    #frequent_genre
+    #for movie in user_data("watched"):
         #user_data["watched"].append(movie)
-        if title in len(genre):
-            return title
+        #if title in len(genre):
+            #return title
 
 
     #len(recommendations)
 
-    return recommendations
+    #return recommendations
+
+if __name__ == '__main__':
+    amandas_data = {
+        "watched": [],
+        "friends": [
+            {
+                "watched": [
+                    {
+                        "title": "Title A"
+                    },
+                    {
+                        "title": "Title C"
+                    }
+                ]
+            },
+            {
+                "watched": [
+                    {
+                        "title": "Title A"
+                    },
+                    {
+                        "title": "Title D"
+                    },
+                    {
+                        "title": "Title F"
+                    }
+                ]
+            }
+        ]
+    }
+    print(get_unique_watched(amandas_data))
