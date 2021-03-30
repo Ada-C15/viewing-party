@@ -13,9 +13,9 @@ def test_create_movie_all_params_valid_returns_movie():
     new_movie = create_movie(movie_title, genre, rating)
 
     # Assert
-    assert new_movie["title"] is "Title A"
-    assert new_movie["genre"] is "Horror"
-    assert new_movie["rating"] is 3.5
+    assert new_movie["title"] == "Title A"
+    assert new_movie["genre"] == "Horror"
+    assert new_movie["rating"] == 3.5
 
 
 def test_create_movie_no_title_returns_none():
@@ -119,7 +119,6 @@ def test_watch_movie_moves_movie_from_watchlist_to_empty_watched():
     assert updated_data["watched"][0]["title"] is "Title A"
     assert updated_data["watched"][0]["genre"] is "Fantasy"
     assert updated_data["watched"][0]["rating"] is 4.8
-
 
 def test_watch_movie_moves_movie_from_watchlist_to_watched():
     # Arrange
