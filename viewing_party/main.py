@@ -98,11 +98,11 @@ def get_watched_avg_rating(user_data):
     default_rating = 0.0
     avg_rating = 0.0
 
-    if movies_list_length > 0:
-        for movie in user_movies:
-            avg_rating += movie["rating"]
-    else:
-        return default_rating
+    if movies_list_length == 0:
+        return None
+        
+   for movie in user_movies:
+        avg_rating += movie["rating"]
     return avg_rating / float(movies_list_length)
 
 def get_most_watched_genre(user_data):
@@ -268,4 +268,3 @@ def get_rec_from_favorites(user_data):
         if movie in recommendations:
             recommendations.remove(movie)
     return recommendations
-
