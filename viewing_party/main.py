@@ -127,7 +127,7 @@ def get_most_watched_genre(user_data):
         if genre not in all_genres:
             all_genres[genre] = 1
         else:
-            all_genres[genre] = all_genres[genre] + 1  # update the value
+            all_genres[genre] += 1  # update the value
 
     for gen in all_genres:
         if all_genres[gen] > pop_val:
