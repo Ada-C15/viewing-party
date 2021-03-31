@@ -79,23 +79,49 @@ def get_most_watched_genre(user_data):
 
 # test 15 returns an empty list if everyone watched the same movies 
 
+def uniq_user_movies(user_data):
+    movies = set()
+    for movie in user_data["watched"]:
+        movies.add(tuple(movie.items()))
+    print(movies)
+    return movies
+
+def uniq_friends_movies(user_data):
+    movies = set()
+
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            movies.add(tuple(movie.items()))
+    print(movies)
+    return movies
+
+
 def get_unique_watched(user_data):
+    user_movies = uniq_user_movies(user_data)
 
-    friends_watched = []
-    for dictionary in user_data['friends']:
-        for title_list in dictionary.values():
-            for dict in title_list:
-                friends_watched.append(dict)
+    friends_movies = uniq_friends_movies(user_data)
+
+    return [dict(movie) for movie in user_movies - friends_movies]
 
 
-    unique_watched = [movie for movie in user_data['watched']\
-         if movie not in friends_watched]
 
-    # for movie_title_dict in user_data['watched']:
-    #     if movie_title_dict not in friends_watched:
-    #         unique_watched.append(movie_title_dict)
+# def get_unique_watched(user_data):
 
-    return unique_watched
+#     friends_watched = []
+#     for dictionary in user_data['friends']:
+#         for title_list in dictionary.values():
+#             for dict in title_list:
+#                 friends_watched.append(dict)
+
+
+#     unique_watched = [movie for movie in user_data['watched']\
+#          if movie not in friends_watched]
+
+#     # for movie_title_dict in user_data['watched']:
+#     #     if movie_title_dict not in friends_watched:
+#     #         unique_watched.append(movie_title_dict)
+
+#     return unique_watched
 
 
 
@@ -114,22 +140,27 @@ def get_unique_watched(user_data):
 
 
 def get_friends_unique_watched(user_data): 
-    friends_watched = []
-# creates a list of dict of movies friends have watched 
-    for friend_dict in user_data['friends']:
-        for title_list in friend_dict.values():
-            for title in title_list:
-                friends_watched.append(title)
-# set a new list to remove duplicate movies 
-    friends_watched_remove_dupes = []
-    for movie in friends_watched:
-        if movie not in friends_watched_remove_dupes:
-            friends_watched_remove_dupes.append(movie)
+#trying with tuples 
+    user_watched = uniq_user_movies(user_data)
+    friends_watched = uniq_friends_movies(user_data)
 
-    more_unique = [movie for movie in friends_watched_remove_dupes 
-if movie not in user_data['watched']]
+    return [dict(movie) for movie in friends_watched - user_watched ]
+#     friends_watched = []
+# # creates a list of dict of movies friends have watched 
+#     for friend_dict in user_data['friends']:
+#         for title_list in friend_dict.values():
+#             for title in title_list:
+#                 friends_watched.append(title)
+# # set a new list to remove duplicate movies 
+#     friends_watched_remove_dupes = []
+#     for movie in friends_watched:
+#         if movie not in friends_watched_remove_dupes:
+#             friends_watched_remove_dupes.append(movie)
 
-    return more_unique
+#     more_unique = [movie for movie in friends_watched_remove_dupes 
+# if movie not in user_data['watched']]
+
+#     return more_unique
 
 
 # ****** wave 4 tests 19 - 20 ******** 
