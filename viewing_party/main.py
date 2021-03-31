@@ -35,7 +35,7 @@ def watch_movie(user_data, title):
             #if title is found then remove this movie from the users watchlist dictionary
             user_data["watchlist"].remove(watchlist_movie)
             #and add to the watched movie dictionary
-            user_data["watched"].append(watchlist_movie)
+            add_to_watched(user_data, each_movie)
             return user_data  
         
     return user_data
@@ -56,7 +56,7 @@ def get_watched_avg_rating(user_data):
     #get the ratings from the users watched movie dictionary and get the total
     for watched_movie in watched_list:
         #as it iterates it finds the ratings and does the calculation below
-        sum_of_ratings = sum_of_ratings + watched_movie["rating"]
+        sum_of_ratings += watched_movie["rating"]
 
     #steps out of the loop to calculate the average once the total sum is calculated
     #average will be the sum divided by the length of the watched list
@@ -166,8 +166,8 @@ def add_movie_to_list(movie, movie_list):
 
 #helper function
 def remove_duplicate_movie_from_list(movie_title, movie_list):
-    for i in range(len(movie_list)): 
-        if movie_list[i]['title'] == movie_title: 
+    for movie in movie_list: 
+        if movie['title'] == movie_title: 
             del movie_list[i] 
             return
 
@@ -289,4 +289,3 @@ def get_rec_from_favorites(user_data):
         list_of_friends_watched_movies.append(friends_mov) d '''
        
        
-
