@@ -1,5 +1,6 @@
 # From the test scripts I noticed three functions called:
 #      watch_movie(janes_data, "Title A")
+#wave 1
 def create_movie(title, genre, rating):
     if title and genre and rating:
         return {"title": title, "genre": genre, "rating": rating}
@@ -89,53 +90,33 @@ def get_available_recs(user_data):
 
 
 #wave 5
-#def get_new_rec_by_genre(user_data):
-    #Consider the user's most frequently watched genre. 
-    #Then, determine a list of recommended movies. 
-    #frequent_genre
-    #for movie in user_data("watched"):
-        #user_data["watched"].append(movie)
-        #if title in len(genre):
-            #return title
+def get_new_rec_by_genre(user_data):
+    
+    friends_recs = get_friends_unique_watched(user_data) #wave 3
+    favorite_genre = get_most_watched_genre(user_data) #wave 2
+    genre_recs = []
+
+    for friend in friends_recs:
+        if friend["genre"] == favorite_genre:
+            genre_recs.append(friend)
+    return genre_recs
 
 
-    #len(recommendations)
+def get_rec_from_favorites(user_data): 
+    
+    user_recs = get_unique_watched(user_data)   #wave 3
+    recs_movies = []
 
-    #return recommendations
+    for user_rec in user_recs:
+        for movie in user_data ["favorites"]:
+            if movie["title"] == user_rec["title"]:
+                recs_movies.append(movie)
+    
+    return recs_movies
 
-if __name__ == '__main__':
-    amandas_data = {
-        "subscriptions": ["Service A", "Service B"],
-        "watched": [],
-        "friends": [
-            {
-                "watched": [
-                    {
-                        "title": "Title A",
-                        "host": "Service A"
-                    },
-                    {
-                        "title": "Title C",
-                        "host": "Service C"
-                    }
-                ]
-            },
-            {
-                "watched": [
-                    {
-                        "title": "Title A",
-                        "host": "Service A"
-                    },
-                    {
-                        "title": "Title B",
-                        "host": "Service B"
-                    },
-                    {
-                        "title": "Title D",
-                        "host": "Service D"
-                    }
-                ]
-            }
-        ]
-    }
-    print(get_available_recs(amandas_data))
+
+
+ 
+
+#if __name__ == '__main__':
+  
