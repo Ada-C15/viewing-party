@@ -77,14 +77,32 @@ def get_most_watched_genre(user_data):
 
 def get_unique_watched(user_data):
     friends_not_watched = []
+    friend_watched = []
+
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            friend_watched.append(movie)
+
     for movie in user_data["watched"]:
-        for friends_movie in user_data["friends"]:
-            if movie["title"] != friends_movie["title"]:
-                friends_not_watched["title"].append(movie)
+        if movie not in friend_watched:
+            friends_not_watched.append(movie)
+
     return friends_not_watched
 
 def get_friends_unique_watched(user_data):
-    pass
+    user_not_watched = []
+    user_watched = []
+
+    for movie in user_data["watched"]:
+        user_watched.append(movie)
+    
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            if movie not in user_watched and movie not in user_not_watched:
+                user_not_watched.append(movie)
+
+    return user_not_watched
+
 
 def get_available_recs(user_data):
     pass
