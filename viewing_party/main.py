@@ -18,7 +18,7 @@ def add_to_watched(user_data, movie):
     """
     Creates a list of watched movies.
     """
-    user_data["watched"] = []
+
     if movie is not None:
         user_data["watched"].append(movie)
     return user_data
@@ -28,7 +28,7 @@ def add_to_watchlist(user_data, movie):
     """
     Creates a watchlist/movies to watch in future
     """
-    user_data["watchlist"] = []
+    # user_data["watchlist"] = []
     if movie is not None:
         user_data["watchlist"].append(movie)
     return user_data
@@ -48,7 +48,8 @@ def watch_movie(user_data, title):
     for movie in user_data["watchlist"]:
         if movie["title"] == title:
             user_data["watchlist"].remove(movie)
-            user_data["watched"].append(movie)
+            add_to_watched(user_data, movie)
+            # user_data["watched"].append(movie)
     return user_data
 
 
@@ -197,10 +198,10 @@ def get_available_recs(user_data):
         for friend in user_data.get("friends", []):
             for friend_list in friend.values():
                 for movie in friend_list:
-                    if movie["host"] == subscr:
-                        if (movie not in user_data["watched"]) and (
-                                movie not in user_friends_matched_subscr):
-                            user_friends_matched_subscr.append(movie)
+                    if movie["host"] == subscr and (
+                        (movie not in user_data["watched"]) and (
+                            movie not in user_friends_matched_subscr)):
+                        user_friends_matched_subscr.append(movie)
     return user_friends_matched_subscr
 
     # Wave 5
