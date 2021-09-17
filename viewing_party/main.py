@@ -1,7 +1,6 @@
 # WAVE 1 *****************************************************************
 
 # create a dictionary from data title, genre, rating
-
 def create_movie(title, genre, rating):
     new_movie = {}
     if title and genre and rating:
@@ -90,7 +89,8 @@ def get_friends_unique_watched(user_data):
     friends_list = make_friends_list(user_data)
     user_unwatched = []
     for friend_movie in friends_list:
-        if friend_movie not in user_data["watched"] and friend_movie not in user_unwatched:
+        if (friend_movie not in user_data["watched"] 
+        and friend_movie not in user_unwatched):
             user_unwatched.append(friend_movie)
     return user_unwatched
 
@@ -98,18 +98,23 @@ def get_friends_unique_watched(user_data):
 
 # WAVE 4 ***************************************************************
 
-
+# Get list of reccommended movies that user hasn't watch, friends have watch and are in users subscriptions
 def get_available_recs(user_data):
     
     recommended_movies = []
 
     for friend in user_data["friends"]:
         for friend_movie in friend["watched"]:
-            if friend_movie["host"] in user_data["subscriptions"] and friend_movie not in user_data["watched"] and friend_movie not in recommended_movies:
+            if (friend_movie["host"] in user_data["subscriptions"]
+            and friend_movie not in user_data["watched"] 
+            and friend_movie not in recommended_movies):
                 recommended_movies.append(friend_movie)
     return recommended_movies
 
+
 # WAVE 5 ***************************************************************
+
+# Get reccomended movies by genre
 def get_new_rec_by_genre(user_data):
 
     recommended_movies = []
@@ -122,8 +127,9 @@ def get_new_rec_by_genre(user_data):
                 recommended_movies.append(friend_movie)
     return recommended_movies
 
+# Get user reccomended favorite movies that their friends haven't watched
 def get_rec_from_favorites(user_data):
-    # movies our friends haven't watched that are user favs
+    
     recommended_movies = user_data['favorites']
 
     for friend in user_data["friends"]:
@@ -132,53 +138,3 @@ def get_rec_from_favorites(user_data):
                 recommended_movies.remove(friend_movie)
     return recommended_movies
         
-
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # for i in user_data["subscriptions"]:
-    #     if user_data["subscriptionsf="] in user_data["host"]:
-    #         host.append(i)
-    # return host
-
-    # for movie in user_data:
-    #     if movie not in unwatched and host == user_data["subscriptions"]:
-    #         recommended_movies.append(movie)
-    # return recommended_movies
-    
-   
-
-    
-    # for i in user_data:
-    #     if host in user_data or recommended_movies not in user_data["watched"]:
-    #         return 
-
-#match the host and subscriptions
-
-#if movie is friends list is , and not in user list append it to the reccomended movies 
-
